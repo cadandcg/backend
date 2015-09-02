@@ -1,6 +1,8 @@
-var colors = require('colors/safe');
-var express = require('express');
-var app = express();
+var 
+    colors = require('colors/safe'),
+    express = require('express'),
+    search = require('./search'),
+    app = express();
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -14,6 +16,14 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
+app.get('/search', function (request, response, next) {
+    search(request.query.q, function (err, tweets) {
+    if (err) return next(err);
+        response.render('search', { results: tweets, search: request.query.q });
+    });
+});
+
 app.listen(app.get('port'), function() {
   console.log(colors.rainbow('Node app is running on port'), app.get('port'));
 });
+
