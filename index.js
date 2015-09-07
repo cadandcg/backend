@@ -1,7 +1,7 @@
 var 
     colors = require('colors/safe'),
     express = require('express'),
-    search = require('./search'),
+    search = require('./lib/search'),
     app = express();
 
 app.set('port', (process.env.PORT || 5000));
